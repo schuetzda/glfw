@@ -1,7 +1,6 @@
 project "GLFW"
 	kind "StaticLib"
 	language "C"
-	staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -10,7 +9,8 @@ project "GLFW"
 	{
 		"include/GLFW/glfw3.h",
 		"include/GLFW/glfw3native.h",
-		"src/glfw_config.h",
+		"src/internal.h",
+		"src/mappings.h",
 		"src/context.c",
 		"src/init.c",
 		"src/input.c",
@@ -22,7 +22,8 @@ project "GLFW"
 		pic "On"
 
 		systemversion "latest"
-		
+		staticruntime "On"
+
 		files
 		{
 			"src/x11_init.c",
@@ -44,6 +45,7 @@ project "GLFW"
 
 	filter "system:windows"
 		systemversion "latest"
+		staticruntime "On"
 
 		files
 		{
@@ -62,11 +64,6 @@ project "GLFW"
 		{ 
 			"_GLFW_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
-		}
-
-		links
-		{
-			"Dwmapi.lib"
 		}
 
 	filter "configurations:Debug"
