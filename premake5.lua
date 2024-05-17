@@ -1,6 +1,7 @@
 project "GLFW"
 	kind "StaticLib"
 	language "C"
+    staticruntime "off"
 
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
@@ -28,11 +29,19 @@ project "GLFW"
 		"src/null_window.c",
 		"src/null_joystick.c"
 	}
+
+	filter "configurations:Debug"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		runtime "Release"
+		optimize "on"
+
 	filter "system:linux"
 		pic "On"
 
 		systemversion "latest"
-		staticruntime "On"
 
 		files
 		{
@@ -52,7 +61,6 @@ project "GLFW"
 
 	filter "system:windows"
 		systemversion "latest"
-		staticruntime "On"
 
 		files
 		{
@@ -81,12 +89,3 @@ project "GLFW"
 			"_CRT_SECURE_NO_WARNINGS"
 		}
 
-		
-
-	filter "configurations:Debug"
-		runtime "Debug"
-		symbols "on"
-
-	filter "configurations:Release"
-		runtime "Release"
-		optimize "on"
